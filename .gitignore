@@ -1,5 +1,8 @@
 homo_sapiens*
 homo_sapiens_merged/*
 WP312*
+bcftools/*
+htslib/*
+lite*
 
 

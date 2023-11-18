@@ -42,3 +42,12 @@ docker run -it --rm  -v $(pwd):/data ensemblorg/ensembl-vep vep \
 --fork 16 \
 --buffer_size 1000 \
 --fasta /data/homo_sapiens_merged/hg38.fa
+#### sabado
+
+./bcftools +split-vep \
+-l ../data/vep_output/lite.vep.vcf | cut -f2 | tr '\n\r' '\t' | \
+awk '{print("CHROM\tPOS\tREF\tALT\t"$0"\tFILTER\tGT\tDP\tAD\tAF")}' > ../data/vep_output/lite.vep.tsv
+
+./bcftools +split-vep \
+-f '%CHROM\t%POS\t%REF\t%ALT\t%CSQ\t%FILTER\t[%GT\t%DP\t%AD\t%AF]\n' \
+-d -A tab ../data/vep_output/lite.vep.vcf -p x >> ../data/vep_output/lite.vep.tsv
